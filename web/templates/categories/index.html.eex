@@ -1,0 +1,31 @@
+<h2>Listing Categories</h2>
+
+<%= link "New category", to: categories_path(@conn, :new) %>
+<div class="pull-right">
+    <%= link "New Sub-Category", to: categories_path(@conn, :new, @categories) %>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for category <- @categories do %>
+    <tr>
+        <td><%= category.name %></td>
+        <td><%= category.description %></td>
+
+        <td class="text-right">
+            <%= link "Show", to: categories_path(@conn, :show, category), class: "btn btn-default btn-xs" %>
+            <%= link "Edit", to: categories_path(@conn, :edit, category), class: "btn btn-default btn-xs" %>
+            <%= link "Delete", to: categories_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+        </td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>

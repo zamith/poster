@@ -1,0 +1,50 @@
+<h2>Listing posts</h2>
+
+<%= link "New post", to: posts_path(@conn, :new) %>
+
+<div class="pull-right">
+    <%= form_for @conn, posts_path(@conn, :index), [method: :get, as: :filter], fn f -> %>
+        <div class="col-md-8">
+            <%= select(f, :categories_id, @categories |> Enum.map(&{&1.name, &1.id}), class: "form-control", prompt: "All Categories !") %>
+        </div>
+
+        <%= submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= for post <- @posts do %>
+    <tr>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>
+        <td><%= post.price %></td>
+
+        <td class="text-right">
+            <%= link "Show", to: posts_path(@conn, :show, post), class: "btn btn-default btn-xs" %>
+            <%= link "Edit", to: posts_path(@conn, :edit, post), class: "btn btn-default btn-xs" %>
+            <%= link "Delete", to: posts_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure of deleting?"], class: "btn btn-danger btn-xs" %>
+        </td>
+    </tr>
+    <% end %>
+    </tbody>
+</table>
+
+<%= if @page.page_number > 1 do %>
+    <%= link "<\ Prev Page", to: posts_path(@conn, :index, page: @page.page_number - 1) %>
+<% end %>
+
+<span class="pull-right">
+    <%= if @page.page_number < @page.total_pages do %>
+        <%= link "Next Page >", to: posts_path(@conn, :index, page: @page.page_number + 1) %>
+    <% end %>
+</span>

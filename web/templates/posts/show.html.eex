@@ -1,0 +1,28 @@
+<h2>Show post</h2>
+
+<ul>
+
+    <li>
+        <strong>Category:</strong>
+        <%= @post.categories.name %>
+    </li>
+
+    <li>
+        <strong>Title:</strong>
+        <%= @post.title %>
+    </li>
+
+    <li>
+        <strong>Description:</strong>
+        <%= @post.content %>
+    </li>
+
+    <li>
+        <strong>Price:</strong>
+        <%= @post.price %>
+    </li>
+
+</ul>
+
+<%= link "Edit", to: posts_path(@conn, :edit, @post) %>
+<%= link "Back", to: posts_path(@conn, :index) %>
