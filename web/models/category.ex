@@ -1,9 +1,8 @@
-defmodule Poster.Categories do
+defmodule Poster.Category do
   use Poster.Web, :model
 
   schema "categories" do
-    field :parent_id, :string
-    field :category_id, :string
+    belongs_to :parent, Poster.Category
     field :name, :string
     field :description, :string
 
@@ -15,8 +14,8 @@ defmodule Poster.Categories do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:parent_id, :category_id, :name, :description])
-    |> validate_required([:parent_id, :category_id, :name, :description])
+    |> cast(params, [:parent_id, :name, :description])
+    |> validate_required([:name, :description])
   end
 
   def alphabetical(query) do

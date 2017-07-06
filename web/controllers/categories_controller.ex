@@ -1,20 +1,20 @@
 defmodule Poster.CategoriesController do
   use Poster.Web, :controller
 
-  alias Poster.Categories
+  alias Poster.Category
 
   def index(conn, _params) do
-    categories = Repo.all Categories
+    categories = Repo.all Category
     render conn, "index.html", categories: categories
   end
 
   def new(conn, _params) do
-    changeset = Categories.changeset(%Categories{})
+    changeset = Category.changeset(%Category{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"categories" => category_params}) do
-    changeset = Categories.changeset(%Categories{}, category_params)
+    changeset = Category.changeset(%Category{}, category_params)
 
     case Repo.insert(changeset) do
       {:ok, _category} ->
@@ -27,19 +27,19 @@ defmodule Poster.CategoriesController do
   end
 
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Categories, id)
+    category = Repo.get!(Category, id)
     render(conn, "show.html", category: category)
   end
 
   def edit(conn, %{"id" => id}) do
-    category = Repo.get!(Categories, id)
-    changeset = Categories.changeset(category)
+    category = Repo.get!(Category, id)
+    changeset = Category.changeset(category)
     render(conn, "edit.html", category: category, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "categories" => category_params}) do
-    category = Repo.get!(Categories, id)
-    changeset = Categories.changeset(category, category_params)
+    category = Repo.get!(Category, id)
+    changeset = Category.changeset(category, category_params)
 
     case Repo.update(changeset) do
       {:ok, category} ->
@@ -52,7 +52,7 @@ defmodule Poster.CategoriesController do
   end
 
   def delete(conn, %{"id" => id}) do
-    category = Repo.get!(Categories, id)
+    category = Repo.get!(Category, id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise an error).

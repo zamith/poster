@@ -2,7 +2,7 @@ defmodule Poster.PostsController do
   use Poster.Web, :controller
 
   alias Poster.Posts
-  alias Poster.Categories
+  alias Poster.Category
   alias Poster.QueryFilter
 
   plug :load_categories when action in [:new, :create, :edit, :update]
@@ -13,7 +13,7 @@ defmodule Poster.PostsController do
            #|> Repo.all
            |> Repo.paginate(params)
 
-    categories = Repo.all Categories
+    categories = Repo.all Category
 
     render conn, "index.html", posts: page.entries, page: page, categories: categories
   end
@@ -80,9 +80,9 @@ defmodule Poster.PostsController do
 
     defp load_categories(conn, _) do
       query =
-        Categories
-        |> Categories.alphabetical
-        |> Categories.names_and_ids
+        Category
+        |> Category.alphabetical
+        |> Category.names_and_ids
 
       categories = Repo.all query
       assign(conn, :categories, categories)
